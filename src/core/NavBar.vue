@@ -48,7 +48,7 @@
       <v-list dense v-if="!hasLogin">
         <v-list-item link v-for="link in links.beforeLogin" :key="link.text">
           <v-list-item-content>
-            <v-btn small text :to="link.to">{{ link.text }}</v-btn>
+            <v-btn small text router :to="link.to">{{ link.text }}</v-btn>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -56,7 +56,7 @@
       <v-list dense v-if="hasLogin">
         <v-list-item link v-for="link in links.afterLogin" :key="link.text">
           <v-list-item-content>
-            <v-btn small text :to="link.to"> {{ link.text }}</v-btn>
+            <v-btn small text router :to="link.to"> {{ link.text }}</v-btn>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -73,15 +73,15 @@ export default {
         { to: "/", text: "Beranda" },
         { to: "/artikel", text: "Artikel" },
         { to: "/informasi", text: "Forum" },
-        { to: "/masuk", text: "Tanya Mentor" },
-        { to: "/daftar", text: "Masuk" },
+        { to: "/layanan", text: "Tanya Mentor" },
+        { to: "/masuk", text: "Masuk" },
       ],
       afterLogin: [
         { to: "/", text: "Beranda" },
         { to: "/artikel", text: "Artikel" },
         { to: "/informasi", text: "Forum" },
-        { to: "/masuk", text: "Tanya Mentor" },
-        { to: "/daftar", text: "Profil" },
+        { to: "/layanan", text: "Tanya Mentor" },
+        { to: "/profil", text: "Profil" },
       ],
     },
     drawer: false,
