@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="d-flex justify-center ma-16"
+      class="d-flex justify-center ma-5 ma-md-16 ma-xl-16 ma-lg-16"
       v-for="item in items"
       :key="item.title"
       :class="item.title == 'Konseling' ? 'flex-row-reverse' : ''"
@@ -61,7 +61,7 @@ export default {
   color: white !important;
 }
 
-@media only screen and (max-width: 1154px) {
+@media only screen and (max-width: 1160px) {
   .image {
     display: none!important;
   }
