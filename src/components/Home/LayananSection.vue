@@ -8,7 +8,7 @@
     >
       <div>
         <v-img
-          :src="require(`../../assets/images/${item.image}`)"
+          :src="require(`../../assets/images/home/${item.image}`)"
           class="items image"
         ></v-img>
       </div>
@@ -52,7 +52,7 @@ export default {
   }),
 };
 </script>
-<style>
+<style scoped>
 .items {
   width: 500px !important;
 }

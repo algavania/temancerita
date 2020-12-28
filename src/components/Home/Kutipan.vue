@@ -18,7 +18,7 @@
           :height="`${$vuetify.breakpoint.mdAndUp ? 150 : 80}`"
           class="rounded-circle"
           style="margin-top: -53px; margin-left: 26px"
-          :src="require(`@/assets/images/${kutipan.image}`)"
+          :src="require(`@/assets/images/home/${kutipan.image}`)"
         ></v-img>
         <v-card-text
           class="text-center"

@@ -13,7 +13,7 @@
       <v-flex md3 xs3>
         <v-img
           class="rounded-lg"
-          src="../../assets/images/sheldon.jpg"
+          src="../../assets/images/home/sheldon.jpg"
           :style="`margin-left:${($vuetify.breakpoint.xsonly = 20)}px;`"
           :height="`${$vuetify.breakpoint.mdAndUp ? 178 : 80}`"
         ></v-img>

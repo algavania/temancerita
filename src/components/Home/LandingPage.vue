@@ -21,8 +21,7 @@
       </div>
       <v-img
         class="image-bg"
-        max-width="800"
-        src="../../assets/images/image_cover.png"
+        src="../../assets/images/home/image_cover.png"
       ></v-img>
     </div>
   </div>
@@ -34,7 +33,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .cover-text {
   width: 40%;
 }
@@ -52,7 +51,7 @@ export default {
 
 .bottom-bg {
   position: relative;
-  background-image: url("../../assets/images/bg_cover.png");
+  background-image: url("../../assets/images/home/bg_cover.png");
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
@@ -61,8 +60,8 @@ export default {
 
 .image-bg {
   position: absolute;
-  left: 50rem;
-  bottom: 20rem;
+  left: 60rem;
+  bottom: 10rem;
 }
 
 .btn-landing {

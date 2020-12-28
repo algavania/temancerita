@@ -74,6 +74,7 @@ export default {
         { to: "/artikel", text: "Artikel" },
         { to: "/informasi", text: "Forum" },
         { to: "/layanan", text: "Tanya Mentor" },
+        { to: "/daftar", text: "Daftar" },
         { to: "/masuk", text: "Masuk" },
       ],
       afterLogin: [
