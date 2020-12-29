@@ -34,7 +34,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .cover-text {
   width: 40%;
 }
@@ -133,7 +133,7 @@ export default {
 
 @media only screen and (max-width: 700px) {
   .cover-text p {
-  font-size: 20px;
-}
+    font-size: 20px;
+  }
 }
 </style>

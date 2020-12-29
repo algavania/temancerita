@@ -38,7 +38,7 @@
     </v-toolbar>
 
     <v-navigation-drawer
-      style="z-index: 101;"
+      style="z-index: 101"
       app
       v-model="drawer"
       temporary
@@ -73,14 +73,14 @@ export default {
         { to: "/", text: "Beranda" },
         { to: "/artikel", text: "Artikel" },
         { to: "/informasi", text: "Forum" },
-        { to: "/masuk", text: "Tanya Mentor" },
+        { to: "/tanya-mentor", text: "Tanya Mentor" },
         { to: "/daftar", text: "Masuk" },
       ],
       afterLogin: [
         { to: "/", text: "Beranda" },
         { to: "/artikel", text: "Artikel" },
         { to: "/informasi", text: "Forum" },
-        { to: "/masuk", text: "Tanya Mentor" },
+        { to: "/tanya-mentor", text: "Tanya Mentor" },
         { to: "/daftar", text: "Profil" },
       ],
     },
