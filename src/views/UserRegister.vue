@@ -1,5 +1,5 @@
 <template>
-  <div class="register d-flex justify-center align-center">
+  <div class="my-16 d-flex justify-center align-center">
     <v-card class="d-flex pa-10 card-register" width="900">
       <div class="register-container">
         <v-img
@@ -9,29 +9,51 @@
       </div>
       <div class="register-container">
         <v-card-text>
-          <h1
-            class="display-2 blue--text text--darken-2 font-weight-bold welcome-text"
-          >
+          <h1 class="blue--text text--darken-2 font-weight-bold welcome-text">
             Welcome
           </h1>
-          <v-form>
+          <v-form ref="form">
             <v-row>
               <v-col cols="12">
-                <div v-for="form in forms" :key="form.model">
+                <div>
                   <v-text-field
-                    v-model="fields[form.model]"
-                    :rules="validateRules(form)"
-                    :label="form.label"
-                    :prepend-icon="form.icon"
-                    :type="form.type"
-                    v-if="
-                      form.label != 'Tanggal Lahir' &&
-                      form.label != 'Jenis Kelamin'
+                    label="Username"
+                    v-model="fields.u_username"
+                    type="text"
+                    prepend-icon="mdi-account-circle"
+                    :rules="nameRules"
+                    :error-messages="
+                      username_error ? 'Username sudah terpakai' : null
                     "
                   ></v-text-field>
 
+                  <v-text-field
+                    label="Password"
+                    v-model="fields.u_password"
+                    prepend-icon="mdi-lock"
+                    :rules="passwordRules"
+                    :append-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
+                    @click:append="show_password = !show_password"
+                    :type="show_password ? 'text' : 'password'"
+                  ></v-text-field>
+
+                  <v-text-field
+                    label="Nama Lengkap"
+                    v-model="fields.u_nama_lengkap"
+                    type="text"
+                    prepend-icon="mdi-account"
+                    :rules="validateRules('Nama Lengkap')"
+                  ></v-text-field>
+
+                  <v-text-field
+                    label="Email"
+                    v-model="fields.u_email"
+                    type="email"
+                    prepend-icon="mdi-email"
+                    :rules="emailRules"
+                  ></v-text-field>
+
                   <v-menu
-                    v-if="form.label == 'Tanggal Lahir'"
                     v-model="menu"
                     :close-on-content-click="false"
                     transition="scale-transition"
@@ -41,11 +63,11 @@
                         autocomplete="off"
                         v-bind="attrs"
                         v-on="on"
-                        :label="form.label"
+                        label="Tanggal Lahir"
                         readonly
-                        :prepend-icon="form.icon"
+                        prepend-icon="mdi-calendar-text"
                         :value="formattedDate"
-                        :rules="validateRules(form)"
+                        :rules="validateRules('Tanggal Lahir')"
                       ></v-text-field>
                     </template>
                     <v-date-picker
@@ -58,12 +80,11 @@
                   </v-menu>
 
                   <v-select
-                    v-if="form.label == 'Jenis Kelamin'"
+                    label="Jenis Kelamin"
                     :items="genders"
-                    :prepend-icon="form.icon"
-                    v-model="fields[form.model]"
-                    :label="form.label"
-                    :rules="validateRules(form)"
+                    prepend-icon="mdi-account-box-outline"
+                    v-model="fields.u_jenis_kelamin"
+                    :rules="validateRules('Jenis Kelamin')"
                   ></v-select>
                 </div>
               </v-col>
@@ -73,6 +94,7 @@
             width="100%"
             class="pa-5 blue darken-2 text--white btn-text mb-5"
             dark
+            @click="registerUser"
             >Register</v-btn
           >
           <span class="body-1"> Sudah punya akun? </span>
@@ -87,59 +109,19 @@
 
 <script>
 import moment from "moment";
+
+import db from "../firebase";
 moment.locale("id-ID");
 
 export default {
   name: "UserRegister",
   data: () => ({
+    show_password: false,
+    username_error: false,
     menu: false,
     genders: [
       { value: "L", text: "Laki-laki" },
       { value: "P", text: "Perempuan" },
-    ],
-    forms: [
-      {
-        label: "Username",
-        model: "u_username",
-        required: true,
-        type: "text",
-        icon: "mdi-account-circle",
-      },
-      {
-        label: "Password",
-        model: "u_password",
-        required: true,
-        type: "password",
-        icon: "mdi-lock",
-      },
-      {
-        label: "Nama Lengkap",
-        model: "u_nama_lengkap",
-        required: true,
-        type: "text",
-        icon: "mdi-account",
-      },
-      {
-        label: "Tanggal Lahir",
-        model: "u_tanggal_lahir",
-        required: true,
-        type: "text",
-        icon: "mdi-calendar-text",
-      },
-      {
-        label: "Jenis Kelamin",
-        model: "u_jenis_kelamin",
-        required: true,
-        type: "text",
-        icon: "mdi-account-box-outline",
-      },
-      {
-        label: "Email",
-        model: "u_email",
-        required: true,
-        type: "email",
-        icon: "mdi-email",
-      },
     ],
     fields: {
       u_username: "",
@@ -148,7 +130,22 @@ export default {
       u_tanggal_lahir: "",
       u_nama_lengkap: "",
       u_jenis_kelamin: "",
+      u_foto: "",
+      u_deskripsi: "",
+      u_role: "1",
     },
+    emailRules: [
+      (v) => !!v || "Email harus diisi",
+      (v) => /.+@.+/.test(v) || "Email tidak valid",
+    ],
+    nameRules: [
+      (v) => !!v || "Username harus diisi",
+      (v) => v.length >= 6 || "Nama setidaknya harus ada 6 karakter",
+    ],
+    passwordRules: [
+      (v) => !!v || "Password harus diisi",
+      (v) => v.length >= 6 || "Password setidaknya harus ada 6 karakter",
+    ],
   }),
   computed: {
     formattedDate() {
@@ -158,10 +155,43 @@ export default {
     },
   },
   methods: {
-    validateRules(field) {
-      if (field.required) {
-        return [(v) => !!v || `${field.label} harus diisi`];
+    validateRules(label) {
+      return [(v) => !!v || `${label} harus diisi`];
+    },
+    checkRules() {
+      return [this.passwordRules];
+    },
+    async registerUser() {
+      if (this.$refs.form.validate()) {
+        let loader = this.$loading.show({});
+        await this.validateUser();
+        if (this.username_error == false) {
+          db.collection("users")
+            .add(this.fields)
+            .then(() => {
+              loader.hide();
+              this.$router.push({ path: "/" });
+            })
+            .catch(function (error) {
+              alert("Error: " + error);
+              loader.hide();
+            });
+        } else {
+          loader.hide();
+        }
       }
+    },
+    async validateUser() {
+      await db
+        .collection("users")
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            if (doc.data()["u_username"] == this.fields.u_username)
+              this.username_error = true;
+            else this.username_error = false;
+          });
+        });
     },
   },
 };
@@ -170,6 +200,11 @@ export default {
 <style>
 .v-menu__content {
   box-shadow: none !important;
+}
+
+.welcome-text {
+  font-size: 3rem !important;
+  margin-bottom: 2rem;
 }
 
 .v-menu--inline {
@@ -182,10 +217,6 @@ export default {
 
 .v-date-picker-table .v-btn.v-btn--active {
   color: white !important;
-}
-
-.register {
-  height: 92vh;
 }
 
 .register-container {
@@ -215,6 +246,16 @@ export default {
 
   .welcome-text {
     text-align: center;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .card-register {
+    width: 280px !important;
+  }
+
+  .welcome-text {
+    font-size: 2rem !important;
   }
 }
 </style>

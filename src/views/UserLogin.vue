@@ -9,31 +9,46 @@
       </div>
       <div class="login-container">
         <v-card-text>
-          <h1 class="display-2 blue--text text--darken-2 font-weight-bold welcome-text">Welcome</h1>
-          <v-form>
-            <v-row>
-              <v-col cols="12">
-                <div v-for="form in forms" :key="form.model">
-                  <v-text-field
-                    v-model="fields[form.model]"
-                    :rules="validateRules(form)"
-                    :label="form.label"
-                    :prepend-icon="form.icon"
-                    :type="form.type"
-                  ></v-text-field>
-                </div>
-              </v-col>
-            </v-row>
+          <h1
+            class="display-2 blue--text text--darken-2 font-weight-bold welcome-text"
+          >
+            Welcome
+          </h1>
+          <v-form ref="form">
+            <v-text-field
+              label="Username"
+              v-model="fields.u_username"
+              type="text"
+              prepend-icon="mdi-account-circle"
+              :rules="validateRules('Username')"
+            ></v-text-field>
+
+            <v-text-field
+              label="Password"
+              v-model="fields.u_password"
+              prepend-icon="mdi-lock"
+              :rules="validateRules('Password')"
+              :append-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
+              @click:append="show_password = !show_password"
+              :type="show_password ? 'text' : 'password'"
+            ></v-text-field>
           </v-form>
+          <p class="red--text">{{form_error}}</p>
           <v-btn
             width="100%"
             class="pa-5 blue darken-2 text--white btn-text mb-5"
             dark
-            >Login</v-btn>
-          <span class="body-1">
-            Belum punya akun?
-          </span>
-          <router-link class="body-1" to="/daftar" style="text-decoration: none;"> Registrasi</router-link>
+            @click="validateLogin"
+            >Login</v-btn
+          >
+          <span class="body-1"> Belum punya akun? </span>
+          <router-link
+            class="body-1"
+            to="/daftar"
+            style="text-decoration: none"
+          >
+            Registrasi</router-link
+          >
         </v-card-text>
       </div>
     </v-card>
@@ -41,25 +56,13 @@
 </template>
 
 <script>
+import db from "../firebase";
+
 export default {
   name: "UserLogin",
   data: () => ({
-    forms: [
-      {
-        label: "Username",
-        model: "u_username",
-        required: true,
-        type: "text",
-        icon: "mdi-account-circle",
-      },
-      {
-        label: "Password",
-        model: "u_password",
-        required: true,
-        type: "password",
-        icon: "mdi-lock",
-      },
-    ],
+    form_error: "",
+    show_password: false,
     fields: {
       u_username: "",
       u_password: "",
@@ -67,8 +70,28 @@ export default {
   }),
   methods: {
     validateRules(field) {
-      if (field.required) {
-        return [(v) => !!v || `${field.label} harus diisi`];
+      return [(v) => !!v || `${field} harus diisi`];
+    },
+    async validateLogin() {
+      this.$refs.form.validate();
+      if (this.$refs.form.validate()) {
+        this.form_error = "";
+        let loader = this.$loading.show({});
+        await db
+          .collection("users")
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              if (doc.data()["u_username"] == this.fields.u_username) {
+                if (doc.data()["u_password"] == this.fields.u_password) {
+                  this.form_error = "";
+                }
+              } else {
+                this.form_error = "*Akun tidak valid";
+              }
+              loader.hide();
+            });
+          });
       }
     },
   },
@@ -79,8 +102,13 @@ export default {
 .btn-text:hover {
   color: white !important;
 }
+
+.welcome-text {
+  margin-bottom: 2rem;
+}
+
 .login {
-  height: 92vh;
+  height: 100vh;
 }
 
 .login-container {
@@ -90,7 +118,7 @@ export default {
 
 @media only screen and (max-width: 962px) {
   .card-login {
-    width: 700px!important;
+    width: 700px !important;
   }
 }
 
@@ -100,16 +128,26 @@ export default {
   }
 
   .card-login {
-    flex-direction: column!important;
+    flex-direction: column !important;
     margin: 2rem;
   }
 
   .login-container {
-    width: 100%!important;
+    width: 100% !important;
   }
-  
+
   .welcome-text {
     text-align: center;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .card-login {
+    width: 280px !important;
+  }
+
+  .welcome-text {
+    font-size: 2rem !important;
   }
 }
 </style>

@@ -14,6 +14,7 @@
         <v-btn
           v-for="link in links.beforeLogin"
           :key="link.text"
+          class="font-weight-regular"
           small
           text
           :to="link.to"
@@ -25,6 +26,7 @@
         <v-btn
           v-for="link in links.afterLogin"
           :key="link.text"
+          class="font-weight-regular"
           small
           text
           :to="link.to"
@@ -73,7 +75,7 @@ export default {
         { to: "/", text: "Beranda" },
         { to: "/artikel", text: "Artikel" },
         { to: "/informasi", text: "Forum" },
-        { to: "/layanan", text: "Tanya Mentor" },
+        { to: "/layanan", text: "Layanan" },
         { to: "/daftar", text: "Daftar" },
         { to: "/masuk", text: "Masuk" },
       ],
@@ -81,7 +83,7 @@ export default {
         { to: "/", text: "Beranda" },
         { to: "/artikel", text: "Artikel" },
         { to: "/informasi", text: "Forum" },
-        { to: "/layanan", text: "Tanya Mentor" },
+        { to: "/layanan", text: "Layanan" },
         { to: "/profil", text: "Profil" },
       ],
     },

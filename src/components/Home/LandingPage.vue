@@ -15,8 +15,8 @@
     <div class="bottom-bg">
       <div class="btn-landing">
         <v-btn rounded class="py-5">
-          <span class="text-button">Yuk Lihat Selengkapnya</span>
-          <v-icon right> mdi-arrow-right </v-icon>
+          <span class="text-button" @click="test">Yuk Lihat Selengkapnya</span>
+          <v-icon right> mdi-arrow-right</v-icon>
         </v-btn>
       </div>
       <v-img
@@ -30,6 +30,11 @@
 <script>
 export default {
   name: "LandingPage",
+  methods: {
+    test() {
+      this.$loading.show({});
+    }
+  }
 };
 </script>
 
@@ -81,7 +86,7 @@ export default {
 
 @media only screen and (max-width: 1617px) {
   .image-bg {
-    left: 40rem;
+    left: 50rem;
   }
 }
 
@@ -132,7 +137,25 @@ export default {
 
 @media only screen and (max-width: 700px) {
   .cover-text p {
-  font-size: 20px;
+    font-size: 20px;
+  }
 }
+
+@media only screen and (max-width: 400px) {
+  .cover-text {
+    margin-bottom: 5rem;
+  }
+  
+  .cover-text p {
+    display: none;
+  }
+
+  .btn-landing {
+    display: none;
+  }
+
+  .bottom-bg {
+    display: none;
+  }
 }
 </style>
