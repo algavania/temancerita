@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import TanyaMentor from '../views/Mentor.vue'
+import Artikel from "../views/ArticlePage.vue"
 //import Login from '../views/UserLogin.vue'
 //import Register from '../views/UserRegister.vue'
 
@@ -26,6 +27,11 @@ const routes = [{
         path: '/tanya-mentor',
         name: 'TanyaMentor',
         component: TanyaMentor
+    },
+    {
+        path: '/artikel',
+        name: 'Artikel',
+        component: Artikel
     },
 ]
 

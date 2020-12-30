@@ -5,12 +5,27 @@
         <v-card class="pa-2">
           <v-col class="d-flex flex-row" cols="12" md="3">
             <div>
-              <v-img class="image" src="../../assets/images/profile.png">
-              </v-img>
+              <v-badge
+                bordered
+                bottom
+                :color="
+                  mentor.isOnline == true ? 'green accent-3' : 'red accent-4'
+                "
+                dot
+                offset-x="15"
+                offset-y="18"
+              >
+                <v-img class="image" src="../../assets/images/profile.png">
+                </v-img>
+              </v-badge>
             </div>
+
             <div class="d-flex flex-column mx-5">
               <span class="mentor">Mentor</span>
-              <span>{{ mentor.keterangan }}</span>
+              <span class="role">Konselor</span>
+              <span class="role grey--text text--lighten-1">{{
+                mentor.keterangan
+              }}</span>
             </div>
           </v-col>
           <v-row no-gutters>
@@ -83,6 +98,11 @@ export default {
 .is-online {
   background-color: blue !important;
   color: white !important;
+}
+.role {
+  font-size: 14px;
+  line-height: 17.64px;
+  font-weight: 400;
 }
 @media only screen and (max-width: 700px) {
   .image {
