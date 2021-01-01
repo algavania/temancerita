@@ -63,13 +63,13 @@ export default {
 
 @media only screen and (max-width: 1160px) {
   .image {
-    display: none!important;
+    display: none !important;
   }
 }
 
 @media only screen and (max-width: 750px) {
   .items {
-    width: 100%!important;
+    width: 100% !important;
   }
 }
 </style>

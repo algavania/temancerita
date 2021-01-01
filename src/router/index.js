@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import TanyaMentor from '../views/Mentor.vue'
+import Artikel from "../views/ArticlePage.vue"
 import Login from '../views/UserLogin.vue'
 import Register from '../views/UserRegister.vue'
 
@@ -11,6 +13,16 @@ const routes = [{
         name: 'Home',
         component: Home
     },
+    // {
+    //     path: '/masuk',
+    //     name: 'Login',
+    //     component: Login
+    // },
+    // {
+    //     path: '/daftar',
+    //     name: 'Register',
+    //     component: Register
+    // },
     {
         path: '/masuk',
         name: 'Login',
@@ -20,6 +32,16 @@ const routes = [{
         path: '/daftar',
         name: 'Register',
         component: Register
+    },
+    {
+        path: '/layanan',
+        name: 'TanyaMentor',
+        component: TanyaMentor
+    },
+    {
+        path: '/artikel',
+        name: 'Artikel',
+        component: Artikel
     },
 ]
 

@@ -40,7 +40,7 @@
     </v-toolbar>
 
     <v-navigation-drawer
-      style="z-index: 101;"
+      style="z-index: 101"
       app
       v-model="drawer"
       temporary
