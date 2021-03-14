@@ -4,8 +4,10 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import TanyaMentor from '../views/Mentor.vue'
 import Artikel from "../views/ArticlePage.vue"
+import Forum from "../views/Forum.vue"
 import Login from '../views/UserLogin.vue'
 import Register from '../views/UserRegister.vue'
+import UserProfile from '../views/UserProfile.vue'
 
 import hasLogin from '../middlewares/hasLogin'
 
@@ -41,6 +43,16 @@ const routes = [{
         path: '/artikel',
         name: 'Artikel',
         component: Artikel
+    },
+    {
+        path: '/informasi',
+        name: 'Forum',
+        component: Forum
+    },
+    {
+        path: '/userprofile',
+        name: 'UserProfile',
+        component: UserProfile
     },
 ]
 

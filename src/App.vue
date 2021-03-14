@@ -2,8 +2,8 @@
   <v-app class="myFont">
     <v-main>
       <NavBar />
-      <router-view/>
-      <Footer/>
+      <router-view />
+      <Footer />
     </v-main>
   </v-app>
 </template>
