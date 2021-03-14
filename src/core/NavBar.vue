@@ -10,7 +10,7 @@
 
       <v-spacer></v-spacer>
 
-      <v-toolbar-items v-if="!hasLogin" class="toolbar-item">
+      <v-toolbar-items v-if="!getStatus.hasLogin" class="toolbar-item">
         <v-btn
           v-for="link in links.beforeLogin"
           :key="link.text"
@@ -22,7 +22,7 @@
         >
       </v-toolbar-items>
 
-      <v-toolbar-items v-if="hasLogin" class="toolbar-item">
+      <v-toolbar-items v-if="getStatus.hasLogin" class="toolbar-item">
         <v-btn
           v-for="link in links.afterLogin"
           :key="link.text"
@@ -47,7 +47,7 @@
       right
       disable-resize-watcher
     >
-      <v-list dense v-if="!hasLogin">
+      <v-list dense v-if="!getStatus.hasLogin">
         <v-list-item link v-for="link in links.beforeLogin" :key="link.text">
           <v-list-item-content>
             <v-btn small text router :to="link.to">{{ link.text }}</v-btn>
@@ -55,7 +55,7 @@
         </v-list-item>
       </v-list>
 
-      <v-list dense v-if="hasLogin">
+      <v-list dense v-if="getStatus.hasLogin">
         <v-list-item link v-for="link in links.afterLogin" :key="link.text">
           <v-list-item-content>
             <v-btn small text router :to="link.to"> {{ link.text }}</v-btn>
@@ -67,6 +67,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 export default {
   name: "NavBar",
   data: () => ({
@@ -88,8 +89,15 @@ export default {
       ],
     },
     drawer: false,
-    hasLogin: "",
   }),
+  computed: mapGetters(["getStatus"]),
+  methods: {
+    ...mapActions(['checkStatus'])
+  },
+  mounted() {
+    this.checkStatus();
+    console.log(localStorage.getItem('hasLogin') == null);
+  }
 };
 </script>
 

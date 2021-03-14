@@ -57,6 +57,7 @@
 
 <script>
 import db from "../firebase";
+import { mapActions } from "vuex";
 
 export default {
   name: "UserLogin",
@@ -69,6 +70,7 @@ export default {
     },
   }),
   methods: {
+    ...mapActions(['setUser']),
     validateRules(field) {
       return [(v) => !!v || `${field} harus diisi`];
     },
@@ -81,16 +83,18 @@ export default {
           .collection("users")
           .get()
           .then((querySnapshot) => {
+            let canLogin = false;
             querySnapshot.forEach((doc) => {
               if (doc.data()["u_username"] == this.fields.u_username) {
                 if (doc.data()["u_password"] == this.fields.u_password) {
                   this.form_error = "";
+                  canLogin = true;
+                  this.setUser(this.fields.u_username);
                 }
-              } else {
-                this.form_error = "*Akun tidak valid";
               }
               loader.hide();
             });
+            if (!canLogin) this.form_error = "*Akun tidak valid!";
           });
       }
     },
