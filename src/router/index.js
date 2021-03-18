@@ -1,4 +1,5 @@
 import Vue from 'vue'
+
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import TanyaMentor from '../views/Mentor.vue'
@@ -8,6 +9,8 @@ import Login from '../views/UserLogin.vue'
 import Register from '../views/UserRegister.vue'
 import UserProfile from '../views/UserProfile.vue'
 
+import hasLogin from '../middlewares/hasLogin'
+
 Vue.use(VueRouter)
 
 const routes = [{
@@ -15,25 +18,21 @@ const routes = [{
         name: 'Home',
         component: Home
     },
-    // {
-    //     path: '/masuk',
-    //     name: 'Login',
-    //     component: Login
-    // },
-    // {
-    //     path: '/daftar',
-    //     name: 'Register',
-    //     component: Register
-    // },
     {
         path: '/masuk',
         name: 'Login',
-        component: Login
+        component: Login,
+        meta: {
+            middleware: hasLogin
+        }
     },
     {
         path: '/daftar',
         name: 'Register',
-        component: Register
+        component: Register,
+        meta: {
+            middleware: hasLogin
+        }
     },
     {
         path: '/layanan',
