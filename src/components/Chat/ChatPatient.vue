@@ -87,7 +87,7 @@ export default {
 .sendMessage {
   background-color: grey;
 }
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 1300px) {
   .infoMentor {
     display: none !important;
   }

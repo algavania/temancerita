@@ -4,7 +4,9 @@
       <NavBar />
       <router-view />
       <ChatPatient />
-      <HeaderPaket />
+      <PacketPage />
+      <PaymentPackage />
+      <PembayaranRekening />
       <Footer />
     </v-main>
   </v-app>
@@ -13,7 +15,9 @@
 <script>
 import NavBar from "./core/NavBar";
 import ChatPatient from "./components/Chat/ChatPatient";
-import HeaderPaket from "./components/PaketMentoring/HeaderPaket";
+import PacketPage from "./views/PacketPage";
+import PaymentPackage from "./views/PaymentPackage";
+import PembayaranRekening from "./views/PembayaranRekening";
 import Footer from "./core/Footer";
 
 export default {
@@ -23,7 +27,9 @@ export default {
     NavBar,
     Footer,
     ChatPatient,
-    HeaderPaket,
+    PacketPage,
+    PaymentPackage,
+    PembayaranRekening,
   },
 
   data: () => ({
