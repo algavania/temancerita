@@ -3,6 +3,8 @@
     <v-main>
       <NavBar />
       <router-view />
+      <ChatPatient />
+      <HeaderPaket />
       <Footer />
     </v-main>
   </v-app>
@@ -10,6 +12,8 @@
 
 <script>
 import NavBar from "./core/NavBar";
+import ChatPatient from "./components/Chat/ChatPatient";
+import HeaderPaket from "./components/PaketMentoring/HeaderPaket";
 import Footer from "./core/Footer";
 
 export default {
@@ -18,6 +22,8 @@ export default {
   components: {
     NavBar,
     Footer,
+    ChatPatient,
+    HeaderPaket,
   },
 
   data: () => ({
