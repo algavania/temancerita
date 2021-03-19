@@ -1,14 +1,14 @@
 <template>
-  <v-container>
-    <v-card>
-      <img src="../assets/images/Pemabayaran/Bank_Mandiri.png" alt="" />\
+  <v-container class="my-16 py-16">
+    <v-card class="my-16">
+      <img class="ma-5" src="../assets/images/Pemabayaran/Bank_Mandiri.png" alt="" />\
       <hr />
       <v-container>
         <h2>Silakan Transfer Pembayaran ke Rekening:</h2>
-        <h1 class="text-center noRek ma-10">00091719801XXXX</h1>
+        <h1 class="text-center noRek ma-10">000917198012134</h1>
         <div class="d-flex justify-space-between">
           <p>Total</p>
-          <p class="noRek">Rp 150.000</p>
+          <p class="noRek">Rp150.000</p>
         </div>
         <v-btn color="primary" width="100%">Konfirmasi Pembayaran</v-btn>
       </v-container>

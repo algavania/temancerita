@@ -1,5 +1,5 @@
 <template>
-  <div class="my-16 d-flex justify-center align-center">
+  <div class="my-16 py-16 d-flex justify-center align-center">
     <v-card class="d-flex pa-10 card-register" width="900">
       <div class="register-container">
         <v-img
@@ -12,19 +12,26 @@
           <h1 class="blue--text text--darken-2 font-weight-bold welcome-text">
             Welcome
           </h1>
-          <v-form ref="form">
+          <v-form ref="form" v-on:submit.prevent>
             <v-row>
               <v-col cols="12">
                 <div>
                   <v-text-field
-                    label="Username"
-                    v-model="fields.u_username"
+                    label="Nama Lengkap"
+                    v-model="fields.u_nama_lengkap"
                     type="text"
-                    prepend-icon="mdi-account-circle"
+                    prepend-icon="mdi-account"
                     :rules="nameRules"
-                    :error-messages="
-                      username_error ? 'Username sudah terpakai' : null
-                    "
+                    @keyup.enter.native="registerUser"
+                  ></v-text-field>
+
+                  <v-text-field
+                    label="Email"
+                    v-model="fields.u_email"
+                    type="email"
+                    prepend-icon="mdi-email"
+                    :rules="emailRules"
+                    @keyup.enter.native="registerUser"
                   ></v-text-field>
 
                   <v-text-field
@@ -35,24 +42,9 @@
                     :append-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
                     @click:append="show_password = !show_password"
                     :type="show_password ? 'text' : 'password'"
+                    @keyup.enter.native="registerUser"
                   ></v-text-field>
-
-                  <v-text-field
-                    label="Nama Lengkap"
-                    v-model="fields.u_nama_lengkap"
-                    type="text"
-                    prepend-icon="mdi-account"
-                    :rules="validateRules('Nama Lengkap')"
-                  ></v-text-field>
-
-                  <v-text-field
-                    label="Email"
-                    v-model="fields.u_email"
-                    type="email"
-                    prepend-icon="mdi-email"
-                    :rules="emailRules"
-                  ></v-text-field>
-
+                  <!-- 
                   <v-menu
                     v-model="menu"
                     :close-on-content-click="false"
@@ -85,11 +77,12 @@
                     prepend-icon="mdi-account-box-outline"
                     v-model="fields.u_jenis_kelamin"
                     :rules="validateRules('Jenis Kelamin')"
-                  ></v-select>
+                  ></v-select> -->
                 </div>
               </v-col>
             </v-row>
           </v-form>
+          <p class="red--text">{{ error }}</p>
           <v-btn
             width="100%"
             class="pa-5 blue darken-2 text--white btn-text mb-5"
@@ -109,16 +102,16 @@
 
 <script>
 import moment from "moment";
-
-import db from "../firebase";
+import axios from "axios";
+import { EventBus } from "../event-bus";
 moment.locale("id-ID");
 
 export default {
   name: "UserRegister",
   data: () => ({
     show_password: false,
-    username_error: false,
     menu: false,
+    error: "",
     genders: [
       { value: "L", text: "Laki-laki" },
       { value: "P", text: "Perempuan" },
@@ -139,7 +132,7 @@ export default {
       (v) => /.+@.+/.test(v) || "Email tidak valid",
     ],
     nameRules: [
-      (v) => !!v || "Username harus diisi",
+      (v) => !!v || "Nama harus diisi",
       (v) => v.length >= 6 || "Nama setidaknya harus ada 6 karakter",
     ],
     passwordRules: [
@@ -163,35 +156,22 @@ export default {
     },
     async registerUser() {
       if (this.$refs.form.validate()) {
-        let loader = this.$loading.show({});
-        await this.validateUser();
-        if (this.username_error == false) {
-          db.collection("users")
-            .add(this.fields)
-            .then(() => {
-              loader.hide();
-              this.$router.push({ path: "/" });
-            })
-            .catch(function (error) {
-              alert("Error: " + error);
-              loader.hide();
-            });
-        } else {
-          loader.hide();
-        }
-      }
-    },
-    async validateUser() {
-      await db
-        .collection("users")
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            if (doc.data()["u_username"] == this.fields.u_username)
-              this.username_error = true;
-            else this.username_error = false;
+        EventBus.$emit("startLoading");
+        await axios
+          .post(`${this.$api}/customers`, {
+            name: this.fields.u_nama_lengkap,
+            email: this.fields.u_email,
+            password: this.fields.u_password,
+          })
+          .then(() => {
+            this.error = "";
+            this.$refs.form.reset();
+          })
+          .catch((err) => {
+            this.error = err.response.data.message.email[0];
           });
-        });
+        EventBus.$emit("stopLoading");
+      }
     },
   },
 };

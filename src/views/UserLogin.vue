@@ -14,26 +14,28 @@
           >
             Welcome
           </h1>
-          <v-form ref="form">
+          <v-form ref="form" v-on:submit.prevent>
             <v-text-field
-              label="Username"
+              label="Email"
               v-model="fields.u_username"
               type="text"
-              prepend-icon="mdi-account-circle"
-              :rules="validateRules('Username')"
+              prepend-icon="mdi-email"
+              :rules="emailRules"
+              @keyup.enter.native="validateLogin"
             ></v-text-field>
 
             <v-text-field
               label="Password"
               v-model="fields.u_password"
               prepend-icon="mdi-lock"
+              @keyup.enter.native="validateLogin"
               :rules="validateRules('Password')"
               :append-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
               @click:append="show_password = !show_password"
               :type="show_password ? 'text' : 'password'"
             ></v-text-field>
           </v-form>
-          <p class="red--text">{{form_error}}</p>
+          <p class="red--text">{{ error }}</p>
           <v-btn
             width="100%"
             class="pa-5 blue darken-2 text--white btn-text mb-5"
@@ -56,46 +58,52 @@
 </template>
 
 <script>
-import db from "../firebase";
-import { mapActions } from "vuex";
+import { EventBus } from "../event-bus";
+import axios from "axios";
 
 export default {
   name: "UserLogin",
   data: () => ({
-    form_error: "",
+    error: "",
     show_password: false,
     fields: {
       u_username: "",
       u_password: "",
     },
+    emailRules: [
+      (v) => !!v || "Email harus diisi",
+      (v) => /.+@.+/.test(v) || "Email tidak valid",
+    ],
   }),
   methods: {
-    ...mapActions(['setUser']),
     validateRules(field) {
       return [(v) => !!v || `${field} harus diisi`];
     },
     async validateLogin() {
       this.$refs.form.validate();
       if (this.$refs.form.validate()) {
-        this.form_error = "";
-        let loader = this.$loading.show({});
-        await db
-          .collection("users")
-          .get()
-          .then((querySnapshot) => {
-            let canLogin = false;
-            querySnapshot.forEach((doc) => {
-              if (doc.data()["u_username"] == this.fields.u_username) {
-                if (doc.data()["u_password"] == this.fields.u_password) {
-                  this.form_error = "";
-                  canLogin = true;
-                  this.setUser(this.fields.u_username);
-                }
-              }
-              loader.hide();
-            });
-            if (!canLogin) this.form_error = "*Akun tidak valid!";
+        EventBus.$emit("startLoading");
+        this.error = "";
+        await axios
+          .post(`${this.$api}/login`, {
+            email: this.fields.u_username,
+            password: this.fields.u_password,
+          })
+          .then((res) => {
+            console.log(res);
+            localStorage.setItem("id", res.data.data.id);
+            localStorage.setItem("token", res.data.data.api_token);
+            localStorage.setItem("email", res.data.data.email);
+            localStorage.setItem("name", res.data.data.name);
+            EventBus.$emit("setLogin", true);
+            this.$router.push({ name: "UserProfile" });
+
+          })
+          .catch((err) => {
+            console.log(err);
+            this.error = err.response.data.message;
           });
+        EventBus.$emit("stopLoading");
       }
     },
   },

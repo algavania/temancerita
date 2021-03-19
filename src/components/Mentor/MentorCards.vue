@@ -35,6 +35,7 @@
                 class="font-weight-regular"
                 :disabled="mentor.isOnline == true ? null : ''"
                 :class="{ 'is-online': mentor.isOnline == true }"
+                to="chat"
                 >CHAT</v-btn
               >
             </v-col>

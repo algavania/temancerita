@@ -22,7 +22,7 @@
           </p>
         </v-card-text>
         <v-card-actions class="d-flex justify-center">
-          <v-btn color="blue darken-2" dark class="pa-5">
+          <v-btn color="blue darken-2" :to="item.title == 'Mentoring' ? 'mentoring' : 'konseling'" dark class="pa-5">
             <span class="btn-text">Cari Tahu Lebih Lanjut</span>
           </v-btn>
         </v-card-actions>

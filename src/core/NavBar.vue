@@ -10,7 +10,7 @@
 
       <v-spacer></v-spacer>
 
-      <v-toolbar-items v-if="!getStatus.hasLogin" class="toolbar-item">
+      <v-toolbar-items v-if="!hasLogin" class="toolbar-item">
         <v-btn
           v-for="link in links.beforeLogin"
           :key="link.text"
@@ -22,13 +22,14 @@
         >
       </v-toolbar-items>
 
-      <v-toolbar-items v-if="getStatus.hasLogin" class="toolbar-item">
+      <v-toolbar-items v-if="hasLogin" class="toolbar-item">
         <v-btn
           v-for="link in links.afterLogin"
           :key="link.text"
           class="font-weight-regular"
           small
           text
+          @click="logout(link.text)"
           :to="link.to"
           >{{ link.text }}</v-btn
         >
@@ -47,7 +48,7 @@
       right
       disable-resize-watcher
     >
-      <v-list dense v-if="!getStatus.hasLogin">
+      <v-list dense v-if="!hasLogin">
         <v-list-item link v-for="link in links.beforeLogin" :key="link.text">
           <v-list-item-content>
             <v-btn small text router :to="link.to">{{ link.text }}</v-btn>
@@ -55,10 +56,12 @@
         </v-list-item>
       </v-list>
 
-      <v-list dense v-if="getStatus.hasLogin">
+      <v-list dense v-if="hasLogin">
         <v-list-item link v-for="link in links.afterLogin" :key="link.text">
           <v-list-item-content>
-            <v-btn small text router :to="link.to"> {{ link.text }}</v-btn>
+            <v-btn small text router :to="link.to" @click="logout(link.text)">
+              {{ link.text }}</v-btn
+            >
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -67,9 +70,10 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { EventBus } from "../event-bus";
 export default {
   name: "NavBar",
+  props: ["hasLogin"],
   data: () => ({
     links: {
       beforeLogin: [
@@ -85,21 +89,30 @@ export default {
         { to: "/artikel", text: "Artikel" },
         { to: "/informasi", text: "Forum" },
         { to: "/layanan", text: "Layanan" },
-        { to: "/profil", text: "Profil" },
+        { to: "/profile", text: "Profil" },
+        { to: "", text: "Logout" },
       ],
     },
     drawer: false,
   }),
-  computed: mapGetters(["getStatus"]),
   methods: {
-    ...mapActions(['checkStatus'])
+    logout(text) {
+      if (text == "Logout") {
+        localStorage.clear();
+        EventBus.$emit("setLogin", false);
+        this.$router.push({ name: "Home" });
+      }
+    },
   },
-  mounted() {
-    this.checkStatus();
-    console.log(localStorage.getItem('hasLogin') == null);
-  }
 };
 </script>
+
+<style scoped>
+.v-btn--active,
+.v-btn:hover {
+  color: #2196f3 !important;
+}
+</style>
 
 <style>
 .img-logo {
@@ -109,11 +122,6 @@ export default {
 
 .appbar-icon {
   display: none !important;
-}
-
-.v-btn--active,
-.v-btn:hover {
-  color: #2196f3 !important;
 }
 
 .v-toolbar__items {

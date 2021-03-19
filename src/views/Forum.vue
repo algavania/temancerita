@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="py-16">
     <ForumCard />
   </div>
 </template>

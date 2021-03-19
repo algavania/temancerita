@@ -14,15 +14,13 @@
           <hr />
           <v-container>
             <p class="subTitle">Nama pengguna</p>
-            <p>Nazhat Afza</p>
+            <p>{{ name }}</p>
             <p class="subTitle">Nama Produk</p>
             <div class="d-flex Paket">
-              <p>Paket</p>
-              <p>|</p>
-              <p class="namaPaket">Kerja</p>
+              <p>Paket Kerja</p>
             </div>
             <p class="subTitle">Durasi Paket</p>
-            <p>13 Januari - 13 Februari 2021</p>
+            <p>20 Maret - 20 Juni 2021</p>
           </v-container>
         </v-card>
         <v-card>
@@ -104,7 +102,7 @@
               <p>Total</p>
               <p>Rp 150.000</p>
             </div>
-            <v-btn width="100%" color="primary">Pesan Sekarang</v-btn>
+            <v-btn width="100%" color="primary" to="subscribe">Pesan Sekarang</v-btn>
           </v-container>
         </v-card>
       </v-col>
@@ -115,6 +113,12 @@
 <script>
 export default {
   name: "PaymentPackage",
+  data: () => ({
+    name: ""
+  }),
+  mounted() {
+    this.name = localStorage.getItem('name');
+  }
 };
 </script>
 

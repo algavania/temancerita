@@ -1,12 +1,16 @@
 <template>
   <v-app class="myFont">
+    <loading
+      :active.sync="loading"
+      :can-cancel="false"
+      :is-full-page="fullPage"
+      :color="`#2196F3`"
+      :loader="`dots`"
+      :lock-scroll="true"
+    ></loading>
     <v-main>
-      <NavBar />
+      <NavBar :hasLogin="hasLogin" />
       <router-view />
-      <ChatPatient />
-      <PacketPage />
-      <PaymentPackage />
-      <PembayaranRekening />
       <Footer />
     </v-main>
   </v-app>
@@ -14,26 +18,33 @@
 
 <script>
 import NavBar from "./core/NavBar";
-import ChatPatient from "./components/Chat/ChatPatient";
-import PacketPage from "./views/PacketPage";
-import PaymentPackage from "./views/PaymentPackage";
-import PembayaranRekening from "./views/PembayaranRekening";
 import Footer from "./core/Footer";
+import { EventBus } from "./event-bus";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
 
 export default {
   name: "App",
-
   components: {
     NavBar,
     Footer,
-    ChatPatient,
-    PacketPage,
-    PaymentPackage,
-    PembayaranRekening,
+    Loading
   },
-
   data: () => ({
-    //
+    hasLogin: false,
+    loading: false,
   }),
+  created() {
+    if (localStorage.getItem('token') != null) this.hasLogin = true;
+    EventBus.$on("startLoading", () => {
+      this.loading = true;
+    });
+    EventBus.$on("stopLoading", () => {
+      this.loading = false;
+    });
+    EventBus.$on("setLogin", (login) => {
+      this.hasLogin = login;
+    });
+  },
 };
 </script>

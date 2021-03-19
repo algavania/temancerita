@@ -6,12 +6,10 @@
         <v-card>
           <v-container>
             <div class="d-flex Paket">
-              <p>Paket</p>
-              <p>|</p>
-              <p class="namaPaketBlue">Kerja</p>
+              <p>Paket <span class="blue--text">Kerja</span></p>
             </div>
             <p class="hargaPaketBlue">Rp 150.000</p>
-            <hr />
+            <hr class="my-5" />
             <ul class="paketSpec">
               <li>
                 <p>Mendapatkan akses bertanya dengan mentor maksimal 3 sesi</p>
@@ -24,18 +22,19 @@
               </li>
             </ul>
           </v-container>
+          <v-card-text>
+            <center><v-btn dark color="blue" to="payment">Langganan</v-btn></center>
+          </v-card-text>
         </v-card>
       </v-col>
       <v-col cols="12" md="4">
         <v-card>
           <v-container>
             <div class="d-flex Paket">
-              <p>Paket</p>
-              <p>|</p>
-              <p class="namaPaketPink">Sukses</p>
+              <p>Paket <span class="pink--text">Sukses</span></p>
             </div>
             <p class="hargaPaketPink">Rp 250.000</p>
-            <hr />
+            <hr class="my-5" />
             <ul class="paketSpec">
               <li>
                 <p>Mendapatkan akses bertanya dengan mentor maksimal 5 sesi</p>
@@ -48,6 +47,9 @@
               </li>
             </ul>
           </v-container>
+          <v-card-text>
+            <center><v-btn dark color="pink" to="payment">Langganan</v-btn></center>
+          </v-card-text>
         </v-card>
       </v-col>
     </v-row>

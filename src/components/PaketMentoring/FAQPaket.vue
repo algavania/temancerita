@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <hr />
-    <v-card>
+    <v-card class="py-5">
       <p class="question text-center">Bagaimana Sih Alur Mentoringnya?</p>
       <v-row>
         <v-col

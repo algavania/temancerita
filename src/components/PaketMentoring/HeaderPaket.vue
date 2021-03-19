@@ -8,12 +8,12 @@
             <li>
               <p class="benefitText">
                 Kamu dapat menceritakan masalah tentang karirmu bareng mentor
-                professional
+                profesional
               </p>
             </li>
             <li>
               <p class="benefitText">
-                kamu bakal dapetin saran dari mentor dan selesain masalah bereng
+                Kamu bakal dapetin saran dari mentor dan nyelesaiin masalah bareng
               </p>
             </li>
           </ul>

@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="my-16 py-16 container">
     <v-row>
       <v-col cols="12" md="8">
         <div>
           <v-container class="header d-flex justify-space-between align-center">
             <div class="d-flex">
               <img
-                src="../../assets/images/profile.png"
+                src="../assets/images/profile.png"
                 width="50px"
                 height="50px"
                 alt=""
@@ -23,26 +23,26 @@
             :height="`${$vuetify.breakpoint.mdAndUp ? 300 : 200} `"
           >
             <v-container class="d-flex justify-center">
-              <v-card :width="`${$vuetify.breakpoint.mdAndUp ? 50 : 100} %`">
+              <v-card class="pa-5" :width="`${$vuetify.breakpoint.mdAndUp ? 50 : 100} %`">
                 <div class="d-flex align-center">
-                  <img src="../../assets/logo.png" width="50px" alt="" />
+                  <img src="../assets/logo.png" width="50px" alt="" />
                   <h5 class="greeting">Selamat Datang di Teman Cerita!</h5>
                 </div>
                 <hr />
                 <p class="greeting">
-                  Sekarang kamu dapat menceritakan masalah mu disini
+                  Sekarang kamu dapat menceritakan masalahmu di sini
                 </p>
               </v-card>
             </v-container>
           </v-card>
-          <div class="header">
+          <div class="header pa-5">
             <v-container class="d-flex justify-center">
               <v-card
                 class="rounded-pill sendMessage d-flex justify-space-between"
                 width="50%"
               >
                 <v-card-text> Kirim Pesan </v-card-text>
-                <v-icon>mdi-send</v-icon>
+                <v-icon class="mx-3">mdi-send</v-icon>
               </v-card>
             </v-container>
           </div>
@@ -57,7 +57,7 @@
           <img
             class="ma-5"
             width="100px"
-            src="../../assets/images/profile.png"
+            src="../assets/images/profile.png"
             alt=""
           />
           <h2 class="text-center">Nama Mentor</h2>
@@ -85,7 +85,7 @@ export default {
   color: #616161;
 }
 .sendMessage {
-  background-color: grey;
+  background-color: white;
 }
 @media only screen and (max-width: 1300px) {
   .infoMentor {

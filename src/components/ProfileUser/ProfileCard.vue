@@ -10,15 +10,16 @@
             style="margin-top: -53px; margin-left: 26px"
             src="../../assets/images/home/erich.jpg"
           ></v-img>
-          <v-card-title> User Name </v-card-title>
-          <v-card-text class="mt-n5"> username </v-card-text>
+          <v-card-title>{{name}} </v-card-title>
+          <v-card-text class="mt-n5">{{email}} </v-card-text>
           <v-card-text class="mt-n3">
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit,
             laudantium.
           </v-card-text>
         </v-col>
         <v-col>
-          <v-btn outlined color="primary" class="mt-4 ml-3">Edit Profile</v-btn>
+          <v-btn outlined color="red" class="mt-4 mx-3" style="float: right;">Logout</v-btn>
+          <v-btn outlined color="primary" class="mt-4 mx-3" style="float: right;">Edit Profile</v-btn>
         </v-col>
       </v-row>
       <v-row>
@@ -36,9 +37,17 @@
 import TimeStamp from "./TimeStamp";
 export default {
   name: "ProfileCard",
+  data: () => ({
+    name: "",
+    email: ""
+  }),
   components: {
     TimeStamp,
   },
+  mounted() {
+    this.name = localStorage.getItem('name');
+    this.email = localStorage.getItem('email');
+  }
 };
 </script>
 

@@ -8,6 +8,10 @@ import Forum from "../views/Forum.vue"
 import Login from '../views/UserLogin.vue'
 import Register from '../views/UserRegister.vue'
 import UserProfile from '../views/UserProfile.vue'
+import Mentoring from '../views/Mentoring.vue'
+import PaymentPackage from '../views/PaymentPackage.vue'
+import PembayaranRekening from '../views/PembayaranRekening.vue'
+import ChatPatient from '../views/ChatPatient.vue'
 
 import hasLogin from '../middlewares/hasLogin'
 
@@ -50,15 +54,41 @@ const routes = [{
         component: Forum
     },
     {
-        path: '/userprofile',
+        path: '/profile',
         name: 'UserProfile',
         component: UserProfile
+    },
+    {
+        path: '/mentoring',
+        name: 'Mentoring',
+        component: Mentoring
+    },
+    {
+        path: '/payment',
+        name: 'Payment',
+        component: PaymentPackage
+    },
+    {
+        path: '/subscribe',
+        name: 'Rekening',
+        component: PembayaranRekening
+    },
+    {
+        path: '/chat',
+        name: 'Chat',
+        component: ChatPatient
     },
 ]
 
 const router = new VueRouter({
+    routes,
     mode: "history",
-    routes
+    scrollBehavior() {
+        return {
+            x: 0,
+            y: 0
+        };
+    },
 })
 
 export default router
