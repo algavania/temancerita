@@ -20,8 +20,9 @@
         </v-col>
         <v-col cols="12" md="3">
           <img
+            class="imgDecor"
             width="400"
-            src="../../assets/images/home/image_cover.png"
+            src="../../assets/images/Paket/headerpaketimgpink.svg"
             alt=""
           />
         </v-col>
@@ -48,5 +49,19 @@ export default {
 .header {
   background-color: #ff7bb9;
   color: whitesmoke;
+}
+
+@media only screen and (max-width: 1080px) {
+  .prologue {
+    display: inline-block;
+    width: 600px;
+    font-size: 20px;
+  }
+  .benefitText {
+    font-size: 16px;
+  }
+  .imgDecor {
+    display: none;
+  }
 }
 </style>
