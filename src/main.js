@@ -11,7 +11,7 @@ Vue.config.productionTip = false
 
 Vue.use(VueGlobalVar, {
     globals: {
-        $api: 'http://127.0.0.1:3030/api',
+        $api: 'https://api-teman-cerita.onrender.com/api',
     }
 });
 
